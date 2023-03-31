@@ -18,6 +18,10 @@ Protect your catnip stash with cat warriors from incoming enemy attacks!
 * Webpack to bundle and transpile source JavaScript code
 * npm to manage project dependencies
 
+## Wireframe
+
+![CatDefenseWireframe](https://user-images.githubusercontent.com/98190992/229187946-915197b7-7c25-4701-b191-598339ec7817.png)
+
 ## Features
 Player is given a starting gold of 20 coins and 3 lives in total.
 Each round has a time limit of 1 minute.
@@ -56,4 +60,4 @@ Wednesday
 * Add any additional features
 
 Thursday
-* Deploy 
+* Deploy
