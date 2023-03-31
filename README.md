@@ -20,7 +20,7 @@ Protect your catnip stash with cat warriors from incoming enemy attacks!
 
 ## Wireframe
 
-![CatDefenseWireframe](https://user-images.githubusercontent.com/98190992/229187946-915197b7-7c25-4701-b191-598339ec7817.png)
+![CatDefenseWireFrame](https://user-images.githubusercontent.com/98190992/229188975-bb404cee-6663-42c3-876d-a5f4c0f8f183.png)
 
 ## Features
 Player is given a starting gold of 20 coins and 3 lives in total.
