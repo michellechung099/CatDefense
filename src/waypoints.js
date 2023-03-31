@@ -43,3 +43,5 @@ const waypoints = [
    "x":1346,
    "y":447
   }]
+
+  module.exports = waypoints; 

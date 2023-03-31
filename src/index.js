@@ -13,8 +13,18 @@ document.addEventListener("DOMContentLoaded", function() {
 
   const img = new Image();
   img.onload = () => {
-    c.drawImage(img, 0, 0)
+    movement();
   }
   img.src= "assets/finalMap.png"
+
+  let x = 50;
+  function movement() {
+    requestAnimationFrame(movement);
+    c.drawImage(img, 0, 0);
+    c.fillStyle = "blue";
+    c.fillRect(x, 400, 90, 90);
+    x++
+  }
+
 
 });
