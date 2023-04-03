@@ -1,0 +1,12 @@
+class Cat {
+
+
+  placement() {
+
+  }
+
+  attack() {
+
+  }
+
+}
