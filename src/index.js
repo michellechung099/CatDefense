@@ -1,6 +1,7 @@
-// import Enemy from "./enemy";
 import { waypoints } from "./waypoint.js"
 import { catPlacement } from "./catPlacement.js"
+import Enemy from "./enemy.js"
+// import catTile from "./catTile.js"
 
 // document.addEventListener("DOMContentLoaded", function() {
   const canvas = document.querySelector("canvas");
@@ -20,77 +21,59 @@ import { catPlacement } from "./catPlacement.js"
 
   img.src= "assets/finalMap.png"
 
-  const catPlacementPositions = [];
+  // 2D array of all possible catTile placement positions
+  const placementPositions = [];
+
   for (let i = 0; i < catPlacement.length; i += 20) {
-    catPlacementPositions.push(catPlacement.slice(i,i+20));
+    placementPositions.push(catPlacement.slice(i, i+20));
   }
 
-  class cat {
-    constructor({x,y}) {
-      this.position = {x, y};
-      
+  // console.log(placementPositions);
+
+  class CatTile {
+    constructor({position = {x: 0, y: 0}}) {
+      this.position = position;
+      this.size = 64; //64 pixels per tile
+      this.color = 'white';
+    }
+
+    draw() {
+      // c.fillStyle = this.color;
+      // 255 in each red green and blue makes it white
+      c.fillStyle = "rgba(255, 255, 255, 0.2)";
+      c.fillRect(this.position.x, this.position.y, this.size, this.size);
+    }
+
+    update(mouse) {
+      this.draw();
+
+      if (mouse.x > this.position.x && mouse.x < this.position.x + this.size &&
+          mouse.y > this.position.y && mouse.y < this.position.y + this.size) {
+          this.color = "white";
+      } else {
+        this.color = "rgba(255, 255, 255, 0.2)"
+      }
     }
 
   }
 
-  catPlacementPositions.forEach((row) => {
-    row.forEach((col) => {
-      if (col === 965) {
+  const catPlacementTiles = [];
 
+  placementPositions.forEach((row, y) => {
+    row.forEach((col, x) => {
+      if (col === 965) {
+        // place a Tile at the position (x,y) if col has a value
+        catPlacementTiles.push(new CatTile({
+          position: {
+            x: x * 64,
+            y: y * 64
+          }
+        }));
       }
     });
   })
 
-  const CONSTANTS = {
-    ENEMY_WIDTH: 90,
-    ENEMY_HEIGHT: 90
-  };
-
-  class Enemy {
-    constructor({x,y}) {
-      this.position = {x, y};
-      this.waypointIndex = 0;
-      // this.speed = 2
-      // this.enemies = [];
-    }
-
-    drawEnemy() {
-      // draw the enemy square with given position
-      c.fillStyle = "blue";
-      c.fillRect(this.position.x, this.position.y, CONSTANTS.ENEMY_WIDTH, CONSTANTS.ENEMY_HEIGHT);
-      console.log(this.position.x);
-      console.log(this.position.y);
-    }
-
-    update() {
-      // draw the enemy and update its position
-      this.drawEnemy();
-
-      const waypoint = waypoints[this.waypointIndex]
-      const yDistance = waypoint.y - this.position.y
-      const xDistance = waypoint.x - this.position.x
-      const angle = Math.atan2(yDistance, xDistance)
-
-      this.position.x += Math.cos(angle)
-      this.position.y += Math.sin(angle)
-
-      // while (this.waypointIndex < waypoints.length - 1) {
-        if (Math.round(this.position.x) === Math.round(waypoint.x) && Math.round(this.position.y) === Math.round(waypoint.y) && this.waypointIndex < waypoints.length - 1) {
-          this.waypointIndex ++;
-        }
-      // }
-    }
-
-    // spawn() {
-    //   for (let i = 0; i < 10; i++) {
-    //     let enemyDistance = i * 130;
-    //     this.enemies.push(new Enemy( {
-    //       position: {x: waypoints[0].x - enemyDistance, y: waypoints[0].y }
-    //     }));
-    //   }
-    //   return this.enemies;
-    // }
-  }
+  console.log(catPlacementTiles);
 
   let enemies = [];
   for (let i = 0; i < 10; i++) {
@@ -99,9 +82,6 @@ import { catPlacement } from "./catPlacement.js"
     enemies.push(newEnemy);
   }
 
-  // const enemy = new Enemy({x: waypoints[0].x, y: waypoints[0].y });
-  // const enemy2 = new Enemy({x: waypoints[0].x - 130, y: waypoints[0].y});
-
   function move() {
     requestAnimationFrame(move);
 
@@ -109,9 +89,24 @@ import { catPlacement } from "./catPlacement.js"
     c.drawImage(img, 0, 0);
 
     enemies.forEach(enemy => {
-      enemy.update();
+      enemy.update(c);
     })
 
+    catPlacementTiles.forEach((tile) => {
+      // tile.draw();  //not passing in mouse when creating new tile
+      tile.update(mouse);
+    })
   }
+
+  let mouse = {
+    x: undefined,
+    y: undefined
+  }
+
+  addEventListener("mousemove", (event) => {
+    mouse.x = event.clientX;
+    mouse.y = event.clientY;
+    // console.log(event);
+  });
 
 // });
