@@ -2,6 +2,8 @@ import { waypoints } from "./waypoint.js"
 import { catPlacement } from "./catPlacement.js"
 import Enemy from "./enemy.js"
 // import catTile from "./catTile.js"
+import Cat from "./cat.js"
+import Projectile from "./projectile.js"
 
 // document.addEventListener("DOMContentLoaded", function() {
   const canvas = document.querySelector("canvas");
@@ -34,13 +36,14 @@ import Enemy from "./enemy.js"
     constructor({position = {x: 0, y: 0}}) {
       this.position = position;
       this.size = 64; //64 pixels per tile
-      this.color = 'white';
+      this.color = "rgba(255, 255, 255, 0.2)";
+      this.occupied = false;
     }
 
     draw() {
       // c.fillStyle = this.color;
       // 255 in each red green and blue makes it white
-      c.fillStyle = "rgba(255, 255, 255, 0.2)";
+      c.fillStyle = this.color;
       c.fillRect(this.position.x, this.position.y, this.size, this.size);
     }
 
@@ -49,11 +52,13 @@ import Enemy from "./enemy.js"
 
       if (mouse.x > this.position.x && mouse.x < this.position.x + this.size &&
           mouse.y > this.position.y && mouse.y < this.position.y + this.size) {
-          this.color = "white";
+          this.color = "rgba(255, 255, 255, 0.5)";
       } else {
         this.color = "rgba(255, 255, 255, 0.2)"
       }
     }
+
+    //also create a logic that alerts the user that you can't place the tile here if the position is out of bounds
 
   }
 
@@ -73,7 +78,7 @@ import Enemy from "./enemy.js"
     });
   })
 
-  console.log(catPlacementTiles);
+  // console.log(catPlacementTiles);
 
   let enemies = [];
   for (let i = 0; i < 10; i++) {
@@ -96,6 +101,14 @@ import Enemy from "./enemy.js"
       // tile.draw();  //not passing in mouse when creating new tile
       tile.update(mouse);
     })
+
+    cats.forEach((cat) => {
+      cat.draw(c);
+      cat.projectiles.forEach((projectile) => {
+        projectile.draw(c);
+        // projectile.update(c);
+      })
+    })
   }
 
   let mouse = {
@@ -103,10 +116,35 @@ import Enemy from "./enemy.js"
     y: undefined
   }
 
-  addEventListener("mousemove", (event) => {
+  const cats = [];
+  let activeTile = undefined;
+
+  canvas.addEventListener("click", (event) => {
+    if (activeTile && !activeTile.isOccupied) {
+      cats.push(new Cat ({position:{
+        x: activeTile.position.x,
+        y: activeTile.position.y
+      }}))
+    }
+    activeTile.isOccupied = true;
+    console.log(cats);
+  })
+
+  canvas.addEventListener("mousemove", (event) => {
     mouse.x = event.clientX;
     mouse.y = event.clientY;
     // console.log(event);
-  });
+
+    activeTile = null;
+    for (let i = 0; i < catPlacementTiles.length; i ++) {
+      const tile = catPlacementTiles[i];
+
+      if (mouse.x > tile.position.x && mouse.x < tile.position.x + tile.size &&
+        mouse.y > tile.position.y && mouse.y < tile.position.y + tile.size) {
+          activeTile = tile;
+          break;
+        }
+    }
+  })
 
 // });

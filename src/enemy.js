@@ -9,6 +9,10 @@ export default class Enemy {
   constructor({x,y}) {
     this.position = {x, y};
     this.waypointIndex = 0;
+    this.center = {
+      x: this.position.x + CONSTANTS.ENEMY_WIDTH/2,
+      y: this.position.y + CONSTANTS.ENEMY_HEIGHT/2
+    }
     // this.speed = 2
     // this.enemies = [];
   }
@@ -17,6 +21,7 @@ export default class Enemy {
     // draw the enemy square with given position
     c.fillStyle = "blue";
     c.fillRect(this.position.x, this.position.y, CONSTANTS.ENEMY_WIDTH, CONSTANTS.ENEMY_HEIGHT);
+    //replace this with a circle 
   }
 
   update(c) {
