@@ -3,7 +3,8 @@ import { catPlacement } from "./catPlacement.js"
 import Enemy from "./enemy.js"
 // import catTile from "./catTile.js"
 import Cat from "./cat.js"
-import Projectile from "./projectile.js"
+// import Projectile from "./projectile.js"
+import Victor from "victor"
 
 // document.addEventListener("DOMContentLoaded", function() {
   const canvas = document.querySelector("canvas");
@@ -80,7 +81,7 @@ import Projectile from "./projectile.js"
 
   // console.log(catPlacementTiles);
 
-  let enemies = [];
+  export const enemies = [];
   for (let i = 0; i < 10; i++) {
     let enemyDistance = i * 130;
     let newEnemy = new Enemy({x: waypoints[0].x - enemyDistance, y: waypoints[0].y })
@@ -105,8 +106,7 @@ import Projectile from "./projectile.js"
     cats.forEach((cat) => {
       cat.draw(c);
       cat.projectiles.forEach((projectile) => {
-        projectile.draw(c);
-        // projectile.update(c);
+        projectile.update(c);
       })
     })
   }

@@ -20,6 +20,8 @@ export default class Cat {
     c.fillRect(this.position.x, this.position.y, this.size, this.size);
   }
 
+
+
   // shoot() {
   //   this.projectiles.push(
   //     new Projectile({
@@ -33,5 +35,3 @@ export default class Cat {
   // }
 
 }
-
-
