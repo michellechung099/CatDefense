@@ -1,7 +1,5 @@
 # Cat Defense
-
-## Live Link 
-https://michellechung099.github.io/CatDefense/
+[Link](https://michellechung099.github.io/CatDefense/) to view project 
 
 ## Background
 Cat Defense is similar to a classic Tower Defense game.
