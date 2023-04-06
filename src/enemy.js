@@ -10,20 +10,22 @@ export default class Enemy {
     //   x: this.position.x + CONSTANTS.ENEMY_WIDTH/2,
     //   y: this.position.y + CONSTANTS.ENEMY_HEIGHT/2
     // }
-    // this.speed = 2
-    // this.enemies = [];
     this.radius = 50;
     this.health = 100;
+    // this.velocity = {x:0, y:0}
+    // this.speed = 5;
+    this.image = new Image()
+    this.image.src = "assets/oneCapybara.png"
   }
 
   drawEnemy(c) {
-    // draw the enemy square with given position
-    c.fillStyle = "blue";
-    // c.fillRect(this.position.x, this.position.y, CONSTANTS.ENEMY_WIDTH, CONSTANTS.ENEMY_HEIGHT);
-    //replace this with a circle
-    c.beginPath();
-    c.arc(this.position.x, this.position.y, this.radius, 0, Math.PI * 2)
-    c.fill();
+    // c.fillStyle = "blue";
+    // c.beginPath();
+    // c.arc(this.position.x, this.position.y, this.radius, 0, Math.PI * 2)
+    // c.fill();
+
+    // const crop = { position: {x: 0, y:0 }, width: this.image.width/8, height: this.image.height}
+    c.drawImage(this.image, this.position.x, this.position.y)
 
     //health bar
     c.fillStyle = 'black';
@@ -42,6 +44,9 @@ export default class Enemy {
     const yDistance = waypoint.y - this.position.y
     const xDistance = waypoint.x - this.position.x
     const angle = Math.atan2(yDistance, xDistance)
+
+    // this.velocity.x = Math.cos(angle)
+    // this.velocity.y = Math.sin(angle)
 
     this.position.x += Math.cos(angle)
     this.position.y += Math.sin(angle)

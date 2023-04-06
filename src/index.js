@@ -50,9 +50,9 @@ import Victor from "victor"
 
       if (mouse.x > this.position.x && mouse.x < this.position.x + this.size &&
           mouse.y > this.position.y && mouse.y < this.position.y + this.size) {
-          this.color = "rgba(255, 255, 255, 0.5)";
+          this.color = "rgba(255, 255, 255, 0.2)";
       } else {
-        this.color = "rgba(255, 255, 255, 0.2)"
+        this.color = "rgba(255, 255, 255, 0)"
       }
     }
 
@@ -77,16 +77,19 @@ import Victor from "victor"
   })
 
   export const enemies = [];
+  const cats = [];
+  let activeTile = undefined;
+  let enemyCount = 5;
 
-  function enemySpawn() {
-    for (let i = 1; i < 3; i++) {
+  function enemySpawn(count) {
+    for (let i = 1; i < count + 1; i++) {
       let enemyDistance = i * 130;
       let newEnemy = new Enemy({x: waypoints[0].x - enemyDistance, y: waypoints[0].y })
       enemies.push(newEnemy);
     }
   }
 
-  enemySpawn();
+  enemySpawn(enemyCount);
 
   function move() {
     requestAnimationFrame(move);
@@ -106,6 +109,7 @@ import Victor from "victor"
       tile.update(mouse);
     })
 
+    //radius detector for enemies for targeting
     cats.forEach((cat) => {
       cat.update(c);
       cat.target = null;
@@ -131,8 +135,10 @@ import Victor from "victor"
 
         // when projectile hits the enemy
         if (distance < projectile.enemy.radius + projectile.radius) {
+          //decrease enemy health & remove from enemies array
           projectile.enemy.health -= 20;
 
+          //keep track of individual enemy with health property 0
           if (projectile.enemy.health <= 0) {
             const enemyIndex = enemies.findIndex((enemy) => {
               return projectile.enemy === enemy
@@ -143,8 +149,10 @@ import Victor from "victor"
             }
           }
 
+          //once enemies array is empty, respawn enemies
           if (enemies.length === 0) {
-            enemySpawn();
+            enemyCount += 2;
+            enemySpawn(enemyCount);
           }
 
           cat.projectiles.splice(i, 1);
@@ -158,9 +166,6 @@ import Victor from "victor"
     y: undefined
   }
 
-  const cats = [];
-  let activeTile = undefined;
-
   canvas.addEventListener("click", (event) => {
     if (activeTile && !activeTile.isOccupied) {
       cats.push(new Cat ({position:{
@@ -169,13 +174,11 @@ import Victor from "victor"
       }}))
     }
     activeTile.isOccupied = true;
-    // console.log(cats);
   })
 
   canvas.addEventListener("mousemove", (event) => {
     mouse.x = event.clientX;
     mouse.y = event.clientY;
-    // console.log(event);
 
     activeTile = null;
     for (let i = 0; i < catPlacementTiles.length; i ++) {
@@ -188,31 +191,3 @@ import Victor from "victor"
         }
     }
   })
-
-  // function toggleMusic(){
-  //   audioButton.onclick = function () {
-  //     audioButton.classList.toggle('active')
-  //     if (audio.paused) {
-  //       document.getElementById("play-audio").src = "./assets/darkmodeButtons/musicOn.png"
-  //       audio.play()
-  //     } else {
-  //       document.getElementById("play-audio").src = "./assets/darkmodeButtons/musicOff.png"
-  //       audio.pause();
-  //     }
-  //   }
-  // }
-
-  // function toggleMenuOnClick() {
-
-  // }
-
-// });
-
-
-//<img id="play-audio" class="click" src="./assets/darkmodeButtons/musicOff.png">
-//<audio id="music" loop="loop" autoplay="autoplay">
-//  <source src="./assets/space-jazz-by-kevin-macleod-from-filmmusic-io.mp3">
-//</audio>
-
-// a href src="linkedin website"
-// img class="live-link"

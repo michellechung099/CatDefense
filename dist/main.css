@@ -4,3 +4,9 @@
 body {
   background-color: black;
 }
+
+#live-link {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
