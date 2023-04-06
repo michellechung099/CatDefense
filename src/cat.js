@@ -1,4 +1,5 @@
-import Projectile from "./projectile";
+import Projectile from "./projectile"
+import {enemies} from './index'
 
 export default class Cat {
   constructor({position = {x: 0, y:0}}) {
@@ -9,17 +10,33 @@ export default class Cat {
       y: this.position.y + this.size/2
     }
     this.projectiles = [
-      new Projectile({position: {x: this.center.x, y: this.center.y }})
+      new Projectile({position: {x: this.center.x, y: this.center.y }, enemy: enemies[0]})
     ];
     this.occupied = false;
-    // this.target;
+    //radius of which the cat can shoot at enemies
+    this.radius = 250;
+    this.target;
+    this.frames = 0;
   }
 
   draw(c) {
     c.fillStyle = "purple";
     c.fillRect(this.position.x, this.position.y, this.size, this.size);
+    c.beginPath();
+    c.arc(this.center.x, this.center.y, this.radius, 0, Math.PI * 2);
+    c.fillStyle = 'rgba(0,0,255,0.2)'
+    c.fill();
   }
 
+  update(c) {
+    this.draw(c);
+    if (this.frames % 90 === 0 && this.target) {
+      this.projectiles.push(
+        new Projectile({position: {x: this.center.x, y: this.center.y }, enemy: this.target})
+      )
+    }
+    this.frames++;
+  }
 
 
   // shoot() {

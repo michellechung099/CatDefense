@@ -3,7 +3,7 @@ import { catPlacement } from "./catPlacement.js"
 import Enemy from "./enemy.js"
 // import catTile from "./catTile.js"
 import Cat from "./cat.js"
-// import Projectile from "./projectile.js"
+import Projectile from "./projectile.js"
 import Victor from "victor"
 
 // document.addEventListener("DOMContentLoaded", function() {
@@ -12,7 +12,6 @@ import Victor from "victor"
 
   canvas.width = 1280;
   canvas.height = 768;
-
   c.fillStyle = "white";
   c.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -30,8 +29,6 @@ import Victor from "victor"
   for (let i = 0; i < catPlacement.length; i += 20) {
     placementPositions.push(catPlacement.slice(i, i+20));
   }
-
-  // console.log(placementPositions);
 
   class CatTile {
     constructor({position = {x: 0, y: 0}}) {
@@ -79,8 +76,6 @@ import Victor from "victor"
     });
   })
 
-  // console.log(catPlacementTiles);
-
   export const enemies = [];
   for (let i = 0; i < 10; i++) {
     let enemyDistance = i * 130;
@@ -104,10 +99,42 @@ import Victor from "victor"
     })
 
     cats.forEach((cat) => {
-      cat.draw(c);
-      cat.projectiles.forEach((projectile) => {
-        projectile.update(c);
+      cat.update(c);
+      cat.target = null;
+      const targetEnemies = enemies.filter(enemy => {
+        const xDistance = enemy.position.x - cat.center.x;
+        const yDistance = enemy.position.y - cat.center.y;
+        const distance = Math.hypot(xDistance, yDistance);
+        // overlapping
+        return distance < enemy.radius + cat.radius
       })
+      cat.target = targetEnemies[0]
+
+      //use a for loop instead of forEach because when using splice, it will make the rendering process skip over one projectile which will make the animation flicker
+      //if projectiles are deleted from the back, since it is already rendered out, it won't make a flicker problem when spliced
+      for (let i = cat.projectiles.length-1; i >=0; i--) {
+        const projectile = cat.projectiles[i];
+
+        projectile.update(c);
+
+        const xDistance = projectile.enemy.position.x - projectile.position.x;
+        const yDistance = projectile.enemy.position.y - projectile.position.y;
+        const distance = Math.hypot(xDistance, yDistance);
+
+        // when projectile hits the enemy
+        if (distance < projectile.enemy.radius + projectile.radius) {
+          projectile.enemy.health -= 20;
+
+          if (projectile.enemy.health <= 0) {
+            const enemyIndex = enemies.findIndex((enemy) => {
+              return projectile.enemy === enemy
+            })
+
+            enemies.splice(enemyIndex, 1);
+          }
+          cat.projectiles.splice(i, 1);
+        }
+      }
     })
   }
 
@@ -127,7 +154,7 @@ import Victor from "victor"
       }}))
     }
     activeTile.isOccupied = true;
-    console.log(cats);
+    // console.log(cats);
   })
 
   canvas.addEventListener("mousemove", (event) => {
