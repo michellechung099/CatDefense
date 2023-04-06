@@ -77,11 +77,16 @@ import Victor from "victor"
   })
 
   export const enemies = [];
-  for (let i = 0; i < 10; i++) {
-    let enemyDistance = i * 130;
-    let newEnemy = new Enemy({x: waypoints[0].x - enemyDistance, y: waypoints[0].y })
-    enemies.push(newEnemy);
+
+  function enemySpawn() {
+    for (let i = 1; i < 3; i++) {
+      let enemyDistance = i * 130;
+      let newEnemy = new Enemy({x: waypoints[0].x - enemyDistance, y: waypoints[0].y })
+      enemies.push(newEnemy);
+    }
   }
+
+  enemySpawn();
 
   function move() {
     requestAnimationFrame(move);
@@ -89,9 +94,12 @@ import Victor from "victor"
     // draw image on canvas
     c.drawImage(img, 0, 0);
 
-    enemies.forEach(enemy => {
+    // this is also refactored into for loop from the back to prevent flickering when removing the enemies
+    // because you want them to be rendered and removed
+    for (let i = enemies.length-1; i >=0; i--) {
+      const enemy = enemies[i];
       enemy.update(c);
-    })
+    }
 
     catPlacementTiles.forEach((tile) => {
       // tile.draw();  //not passing in mouse when creating new tile
@@ -130,8 +138,15 @@ import Victor from "victor"
               return projectile.enemy === enemy
             })
 
-            enemies.splice(enemyIndex, 1);
+            if (enemyIndex > -1) {
+              enemies.splice(enemyIndex, 1);
+            }
           }
+
+          if (enemies.length === 0) {
+            enemySpawn();
+          }
+
           cat.projectiles.splice(i, 1);
         }
       }
@@ -174,4 +189,30 @@ import Victor from "victor"
     }
   })
 
+  // function toggleMusic(){
+  //   audioButton.onclick = function () {
+  //     audioButton.classList.toggle('active')
+  //     if (audio.paused) {
+  //       document.getElementById("play-audio").src = "./assets/darkmodeButtons/musicOn.png"
+  //       audio.play()
+  //     } else {
+  //       document.getElementById("play-audio").src = "./assets/darkmodeButtons/musicOff.png"
+  //       audio.pause();
+  //     }
+  //   }
+  // }
+
+  // function toggleMenuOnClick() {
+
+  // }
+
 // });
+
+
+//<img id="play-audio" class="click" src="./assets/darkmodeButtons/musicOff.png">
+//<audio id="music" loop="loop" autoplay="autoplay">
+//  <source src="./assets/space-jazz-by-kevin-macleod-from-filmmusic-io.mp3">
+//</audio>
+
+// a href src="linkedin website"
+// img class="live-link"
