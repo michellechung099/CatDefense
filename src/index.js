@@ -7,6 +7,14 @@ import Projectile from "./projectile.js"
 import Victor from "victor"
 
 // document.addEventListener("DOMContentLoaded", function() {
+  document.getElementById("play-game-button").addEventListener("click", function() {
+    document.getElementById("instructions").style.display = "none";
+    document.getElementById("social-links").style.visibility = 'visible';
+
+    document.getElementById("canvas").style.display = "block";
+    img.src = "assets/finalMap.png"
+  });
+
   const canvas = document.getElementById("canvas");
   const c = canvas.getContext("2d");
 
@@ -29,7 +37,7 @@ import Victor from "victor"
     move();
   }
 
-  img.src= "assets/finalMap.png"
+  // img.src= "assets/finalMap.png"
 
   // 2D array of all possible catTile placement position using waypoints data
   const placementPositions = [];

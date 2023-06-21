@@ -17,11 +17,26 @@
   <body>
     <style>
       body {
-        background-color: black;
+        background-image: url('./assets/background.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+      }
+      #social-links {
+        position: absolute;
+        visibility: hidden;
+        right: -160px;
       }
     </style>
-    <div style="position: relative; display: inline-block">
-      <canvas id="canvas"></canvas>
+    <div style="position: relative; display: inline-block;">
+      <div id="instructions" style="position: absolute; display: block; text-align: center; color: white; top: 20vh; width: 600px; left: 33vw;">
+        <h2 style="font-size: 40px; color: white; font-family: 'Archivo Black';">Instructions:</h2>
+        <p style="font-size: 18px; color: white; font-family: 'Archivo Black';">You can place multiple cats on the map to defeat incoming enemies that move in one direction. Each cat costs 50 coins to place and defeating each enemy earns you 10 coins. If you are unable to kill an incoming enemy until they are out of bounds to the right side, you will lose your life. Protect your catnip stash with cat warriors from incoming enemy attacks. Good luck!</p>
+        <button id="play-game-button">START GAME</button>
+      </div>
+
+      <canvas id="canvas" style="display: none;"></canvas>
       <!-- <canvas id="background-canvas"></canvas> -->
 
       <div style="position: absolute; top: 4px; right: 75px;">
@@ -31,13 +46,13 @@
         <span id="hearts" style="font-size: 36px; color: white; font-family: 'Archivo Black'; -webkit-text-stroke: 2px black;">7</span>
       </div>
 
-      <div style="position: absolute";>
+      <div id="social-links">
         <a href="https://github.com/michellechung099" id="live-link">
-          <img src="assets/github_icon.png" alt="github_icon">
+          <img src="assets/github.png" alt="github_icon" style="height: 30px;">
         </a>
 
         <a href="https://www.linkedin.com/in/michelle-chung-3a915a134/" id="live-link-2">
-          <img src="" alt="linkedin_icon">
+          <img src="assets/LinkedinLogo.png" alt="linkedin_icon" style="height: 30px;">
         </a>
       </div>
     </div>
