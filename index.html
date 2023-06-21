@@ -8,12 +8,40 @@
     <link rel="stylesheet" href="./dist/main.css" />
     <script type="application/javascript" src="./dist/main.js" defer></script>
     <link rel="icon" type="image/x-icon" href="assets/website_favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap" rel="stylesheet">
     <title>Cat Defense</title>
   </head>
 
   <body>
-    <canvas></canvas>
-      <a href="https://github.com/michellechung099/CatDefense" id="live-link"><i class="fa fa-github"></i></i></a>
+    <style>
+      body {
+        background-color: black;
+      }
+    </style>
+    <div style="position: relative; display: inline-block">
+      <canvas id="canvas"></canvas>
+      <!-- <canvas id="background-canvas"></canvas> -->
+
+      <div style="position: absolute; top: 4px; right: 75px;">
+        <img src="../assets/diamond.png" alt="diamond" style="height: 32px; vertical-align: middle; position: relative; top: -7px;">
+        <span id="diamonds" style="font-size: 36px; color: white; font-family: 'Archivo Black'; -webkit-text-stroke: 2px black; margin-right: 13px;">100</span>
+        <img src="../assets/heart.png" alt="heart" style="height: 32px; vertical-align: middle; position: relative; top: -7px;">
+        <span id="hearts" style="font-size: 36px; color: white; font-family: 'Archivo Black'; -webkit-text-stroke: 2px black;">7</span>
+      </div>
+
+      <div style="position: absolute";>
+        <a href="https://github.com/michellechung099" id="live-link">
+          <img src="assets/github_icon.png" alt="github_icon">
+        </a>
+
+        <a href="https://www.linkedin.com/in/michelle-chung-3a915a134/" id="live-link-2">
+          <img src="" alt="linkedin_icon">
+        </a>
+      </div>
+    </div>
+
   </body>
 
 </html>

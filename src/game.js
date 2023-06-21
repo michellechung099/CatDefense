@@ -1,10 +1,12 @@
 class Game {
+  constructor() {
+    this.gold = 20; // starting gold
 
-  handleWave() {
 
   }
 
   gameOver() {
-    //game over condition and logic (health bars)
+    // if the user health becomes 0, game over, which stop the move() function 
+
   }
 }

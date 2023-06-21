@@ -1,14 +1,22 @@
 import { waypoints } from "./waypoint.js"
 import { catPlacement } from "./catPlacement.js"
 import Enemy from "./enemy.js"
-// import catTile from "./catTile.js"
+// import CatTile from "./CatTile.js"
 import Cat from "./cat.js"
 import Projectile from "./projectile.js"
 import Victor from "victor"
 
 // document.addEventListener("DOMContentLoaded", function() {
-  const canvas = document.querySelector("canvas");
+  const canvas = document.getElementById("canvas");
   const c = canvas.getContext("2d");
+
+  // const bgCanvas = document.getElementById("background-canvas");
+  // const bgCtx = bgCanvas.getContext("2d");
+
+  // bgCanvas.width = window.innerWidth;
+  // bgCanvas.height = window.innerHeight;
+  // bgCtx.fillStyle = "black";
+  // bgCtx.fillRect(0, 0, bgCanvas.width, bgCanvas.height);
 
   canvas.width = 1280;
   canvas.height = 768;
@@ -23,14 +31,16 @@ import Victor from "victor"
 
   img.src= "assets/finalMap.png"
 
-  // 2D array of all possible catTile placement positions
+  // 2D array of all possible catTile placement position using waypoints data
   const placementPositions = [];
 
+  // parse waypoints data with 20 columns per row
+  // columns indicate x coordinates, rows indicate y coordinates
   for (let i = 0; i < catPlacement.length; i += 20) {
     placementPositions.push(catPlacement.slice(i, i+20));
   }
-
   class CatTile {
+    // object destructuring with position
     constructor({position = {x: 0, y: 0}}) {
       this.position = position;
       this.size = 64; //64 pixels per tile
@@ -56,8 +66,6 @@ import Victor from "victor"
       }
     }
 
-    //also create a logic that alerts the user that you can't place the tile here if the position is out of bounds
-
   }
 
   const catPlacementTiles = [];
@@ -76,15 +84,18 @@ import Victor from "victor"
     });
   })
 
+
   export const enemies = [];
   const cats = [];
   let activeTile = undefined;
-  let enemyCount = 5;
+  let enemyCount = 3;
+  let diamonds = 100;
+  let hearts = 7;
 
   function enemySpawn(count) {
     for (let i = 1; i < count + 1; i++) {
       let enemyDistance = i * 130;
-      let newEnemy = new Enemy({x: waypoints[0].x - enemyDistance, y: waypoints[0].y })
+      let newEnemy = new Enemy({ position: {x: waypoints[0].x - enemyDistance, y: waypoints[0].y }})
       enemies.push(newEnemy);
     }
   }
@@ -92,7 +103,7 @@ import Victor from "victor"
   enemySpawn(enemyCount);
 
   function move() {
-    requestAnimationFrame(move);
+    const moveId = requestAnimationFrame(move);
 
     // draw image on canvas
     c.drawImage(img, 0, 0);
@@ -102,6 +113,31 @@ import Victor from "victor"
     for (let i = enemies.length-1; i >=0; i--) {
       const enemy = enemies[i];
       enemy.update(c);
+
+      if (enemy.position.x > canvas.width) {
+        hearts -= 1;
+        enemies.splice(i, 1);
+        document.querySelector('#hearts').innerHTML = hearts;
+
+        if (hearts === 0) {
+          cancelAnimationFrame(moveId);
+
+          c.font = "bold 75px Archivo Black";
+          c.fillStyle = "white";
+          c.strokeStyle = "black";
+          c.textAlign = "center";
+          c.lineWidth = 7;
+
+          c.strokeText("Game Over", canvas.width / 2, canvas.height/2);
+          c.fillText("Game Over", canvas.width / 2, canvas.height/2);
+        }
+      }
+    }
+
+    //once enemies array is empty, respawn enemies
+    if (enemies.length === 0) {
+      enemyCount += 3;
+      enemySpawn(enemyCount);
     }
 
     catPlacementTiles.forEach((tile) => {
@@ -146,13 +182,8 @@ import Victor from "victor"
 
             if (enemyIndex > -1) {
               enemies.splice(enemyIndex, 1);
+              gold += 20;
             }
-          }
-
-          //once enemies array is empty, respawn enemies
-          if (enemies.length === 0) {
-            enemyCount += 2;
-            enemySpawn(enemyCount);
           }
 
           cat.projectiles.splice(i, 1);
@@ -167,7 +198,9 @@ import Victor from "victor"
   }
 
   canvas.addEventListener("click", (event) => {
-    if (activeTile && !activeTile.isOccupied) {
+    if (activeTile && !activeTile.isOccupied && diamonds - 50 >= 0) {
+      diamonds -= 50;
+      document.querySelector('#diamonds').innerHTML = diamonds;
       cats.push(new Cat ({position:{
         x: activeTile.position.x,
         y: activeTile.position.y
@@ -191,3 +224,5 @@ import Victor from "victor"
         }
     }
   })
+
+  // <a href="https://github.com/michellechung099/CatDefense" id="live-link"><i class="fa fa-github"></i></a>

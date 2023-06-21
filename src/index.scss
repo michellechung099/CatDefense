@@ -1,9 +1,32 @@
 body {
-  background-color: black;
+  margin: 0;
 }
 
-#live-link {
-  position: absolute;
-  top: 0;
-  right: 0;
-}
+// #live-link {
+//   position: absolute;
+//   top: 10px;
+//   right: 10px;
+//   z-index: 2;
+// }
+
+// div {
+//   position: relative;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   height: 100vh;
+//   width: 100vw;
+// }
+
+// #canvas {
+//   position: absolute;
+//   z-index: 1;
+//   border-radius: 10px;
+// }
+
+// #background-canvas {
+//   position: absolute;
+//   z-index: 0;
+//   height: 100vh;
+//   width: 100vw;
+// }
