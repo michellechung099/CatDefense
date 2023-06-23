@@ -35,14 +35,26 @@ export default class Enemy {
       height: this.image.height
     }
 
-    c.drawImage(this.image, frame.position.x, frame.position.y, frame.width, frame.height, this.position.x, this.position.y, frame.width, frame.height)
+    const spriteX = this.position.x - 50;
+    const spriteY = this.position.y - 10;
+
+    c.drawImage(
+      this.image,
+      frame.position.x,
+      frame.position.y,
+      frame.width,
+      frame.height,
+      spriteX,
+      spriteY,
+      frame.width,
+      frame.height);
 
     //health bar
     c.fillStyle = 'black';
-    c.fillRect((this.position.x - this.width/2), this.position.y-60, this.width, 8)
+    c.fillRect((this.position.x - this.width/2), this.position.y-10, this.width, 8)
 
     c.fillStyle = 'purple';
-    c.fillRect((this.position.x - this.width/2), this.position.y-60, (this.width * this.health/100), 8)
+    c.fillRect((this.position.x - this.width/2), this.position.y-10, (this.width * this.health/100), 8)
 
     this.frames.timeElapsed++
     if (this.frames.timeElapsed % this.frames.timeHold === 0) {
