@@ -68,7 +68,7 @@ export default class Enemy {
     const yDistance = waypoint.y - this.position.y
     const xDistance = waypoint.x - this.position.x
     const angle = Math.atan2(yDistance, xDistance)
-    const speed = 3;
+    const speed = 2;
 
     this.velocity.x = Math.cos(angle) * speed
     this.velocity.y = Math.sin(angle) * speed
