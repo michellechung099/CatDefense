@@ -31,18 +31,16 @@ Protect your catnip stash with cat warriors from incoming enemy attacks!
 
   - Starting the game will spawn enemies from the left side that will move toward the right side. The `enemySpawn` function spawns new Enemy instances and moves them in the direction that is specified by `waypoints` that are x and y coordinates on the canvas layer.
 
-  <h5 a><strong><code>index.js</code></strong></h5>
+    <h5 a><strong><code>index.js</code></strong></h5>
 
     ```JavaScript
-    
-    function enemySpawn(count) {
-      for (let i = 1; i < count + 1; i++) {
-        let enemyDistance = i * 130;
-        let newEnemy = new Enemy({ position: {x: waypoints[0].x - enemyDistance, y: waypoints[0].y }})
-        enemies.push(newEnemy);
+      function enemySpawn(count) {
+        for (let i = 1; i < count + 1; i++) {
+          let enemyDistance = i * 130;
+          let newEnemy = new Enemy({ position: {x: waypoints[0].x - enemyDistance, y: waypoints[0].y }})
+          enemies.push(newEnemy);
+        }
       }
-    }
-    
     ```
 
   - The goal is to place cats within the map that shoots projectiles at the enemies to defeat them before they walk outside out of bounds to the right. Here, I used the Victor library to calculate the velocity of projectile motion in the `update` function, which updates the projectile position. 
@@ -91,21 +89,20 @@ Protect your catnip stash with cat warriors from incoming enemy attacks!
   
             document.getElementById('play-again-button').style.display = "block";
 
-  ```
+    ```
 
   - The score will be calculated based on the number of enemies that you defeat. This logic is calculated also within the `move` function.
 
     <h5 a><strong><code>index.js</code></strong></h5>
-    
-      ```JavaScript
 
+    ```JavaScript
         if (enemyIndex > -1) {
-                      enemies.splice(enemyIndex, 1);
-                      diamonds += 20;
-                      document.querySelector('#diamonds').innerHTML = diamonds;
-                      score += 10;
-                      document.querySelector('#score-number').innerHTML = score;
-                    }
-      ```
+           enemies.splice(enemyIndex, 1);
+           diamonds += 20;
+           document.querySelector('#diamonds').innerHTML = diamonds;
+           score += 10;
+           document.querySelector('#score-number').innerHTML = score;
+        }
+    ```
 
 
