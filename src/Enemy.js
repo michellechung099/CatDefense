@@ -1,4 +1,4 @@
-import { waypoints } from "./waypoint.js"
+import { waypoints } from "./Waypoints.js"
 
 export default class Enemy {
   constructor({position = { x: 0, y: 0 }}) {
@@ -6,14 +6,9 @@ export default class Enemy {
     this.waypointIndex = 0;
     this.width = 90;
     this.height = 90;
-    // this.center = {
-    //   x: this.position.x + CONSTANTS.ENEMY_WIDTH/2,
-    //   y: this.position.y + CONSTANTS.ENEMY_HEIGHT/2
-    // }
     this.radius = 50;
     this.health = 100;
     this.velocity = { x: 0, y: 0 }
-    // this.speed = 5;
     this.image = new Image()
     this.image.src = "assets/Run.png"
     this.frames = {
@@ -73,7 +68,7 @@ export default class Enemy {
     const yDistance = waypoint.y - this.position.y
     const xDistance = waypoint.x - this.position.x
     const angle = Math.atan2(yDistance, xDistance)
-    const speed = 2;
+    const speed = 3;
 
     this.velocity.x = Math.cos(angle) * speed
     this.velocity.y = Math.sin(angle) * speed

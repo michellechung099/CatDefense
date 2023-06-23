@@ -1,4 +1,4 @@
-import Projectile from "./projectile"
+import Projectile from "./Projectile"
 import {enemies} from './index'
 
 export default class Cat {
@@ -38,18 +38,4 @@ export default class Cat {
     }
     this.frames++;
   }
-
-
-  // shoot() {
-  //   this.projectiles.push(
-  //     new Projectile({
-  //       position: {
-  //         x: this.center.x - 20,
-  //         y: this.center.y - 110
-  //       },
-  //       enemy: this.target
-  //     })
-  //   )
-  // }
-
 }

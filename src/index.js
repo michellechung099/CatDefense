@@ -1,12 +1,11 @@
-import { waypoints } from "./waypoint.js"
-import { catPlacement } from "./catPlacement.js"
-import Enemy from "./enemy.js"
+import { waypoints } from "./Waypoints.js"
+import { catPlacement } from "./CatPlacement.js"
+import Enemy from "./Enemy.js"
 // import CatTile from "./CatTile.js"
-import Cat from "./cat.js"
-import Projectile from "./projectile.js"
+import Cat from "./Cat.js"
+import Projectile from "./Projectile.js"
 import Victor from "victor"
 
-// document.addEventListener("DOMContentLoaded", function() {
   document.getElementById("play-game-button").addEventListener("click", function() {
     document.getElementById("instructions").style.display = "none";
     document.getElementById("social-links").style.visibility = 'visible';
@@ -30,8 +29,6 @@ import Victor from "victor"
     move();
   }
 
-  // img.src= "assets/finalMap.png"
-
   // 2D array of all possible catTile placement position using waypoints data
   const placementPositions = [];
 
@@ -50,8 +47,6 @@ import Victor from "victor"
     }
 
     draw() {
-      // c.fillStyle = this.color;
-      // 255 in each red green and blue makes it white
       c.fillStyle = this.color;
       c.fillRect(this.position.x, this.position.y, this.size, this.size);
     }
@@ -147,7 +142,6 @@ import Victor from "victor"
     }
 
     catPlacementTiles.forEach((tile) => {
-      // tile.draw();  //not passing in mouse when creating new tile
       tile.update(mouse);
     })
 
