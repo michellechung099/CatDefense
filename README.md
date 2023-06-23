@@ -34,6 +34,7 @@ Protect your catnip stash with cat warriors from incoming enemy attacks!
   <h5 a><strong><code>index.js</code></strong></h5>
 
     ```JavaScript
+    
     function enemySpawn(count) {
       for (let i = 1; i < count + 1; i++) {
         let enemyDistance = i * 130;
@@ -41,6 +42,7 @@ Protect your catnip stash with cat warriors from incoming enemy attacks!
         enemies.push(newEnemy);
       }
     }
+    
     ```
 
   - The goal is to place cats within the map that shoots projectiles at the enemies to defeat them before they walk outside out of bounds to the right. Here, I used the Victor library to calculate the velocity of projectile motion in the `update` function, which updates the projectile position. 
@@ -96,6 +98,7 @@ Protect your catnip stash with cat warriors from incoming enemy attacks!
     <h5 a><strong><code>index.js</code></strong></h5>
     
       ```JavaScript
+
         if (enemyIndex > -1) {
                       enemies.splice(enemyIndex, 1);
                       diamonds += 20;
