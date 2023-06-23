@@ -11,20 +11,13 @@ import Victor from "victor"
     document.getElementById("instructions").style.display = "none";
     document.getElementById("social-links").style.visibility = 'visible';
 
+    document.getElementById("side-section").style.display = "flex";
     document.getElementById("canvas").style.display = "block";
     img.src = "assets/finalMap.png"
   });
 
   const canvas = document.getElementById("canvas");
   const c = canvas.getContext("2d");
-
-  // const bgCanvas = document.getElementById("background-canvas");
-  // const bgCtx = bgCanvas.getContext("2d");
-
-  // bgCanvas.width = window.innerWidth;
-  // bgCanvas.height = window.innerHeight;
-  // bgCtx.fillStyle = "black";
-  // bgCtx.fillRect(0, 0, bgCanvas.width, bgCanvas.height);
 
   canvas.width = 1280;
   canvas.height = 768;
@@ -93,12 +86,13 @@ import Victor from "victor"
   })
 
 
-  export const enemies = [];
-  const cats = [];
+  export let enemies = [];
+  let cats = [];
   let activeTile = undefined;
   let enemyCount = 3;
   let diamonds = 100;
-  let hearts = 7;
+  let hearts = 9;
+  let score = 0;
 
   function enemySpawn(count) {
     for (let i = 1; i < count + 1; i++) {
@@ -110,8 +104,10 @@ import Victor from "victor"
 
   enemySpawn(enemyCount);
 
+  let moveId;
+
   function move() {
-    const moveId = requestAnimationFrame(move);
+    moveId = requestAnimationFrame(move);
 
     // draw image on canvas
     c.drawImage(img, 0, 0);
@@ -138,13 +134,15 @@ import Victor from "victor"
 
           c.strokeText("Game Over", canvas.width / 2, canvas.height/2);
           c.fillText("Game Over", canvas.width / 2, canvas.height/2);
+
+          document.getElementById('play-again-button').style.display = "block";
         }
       }
     }
 
     //once enemies array is empty, respawn enemies
     if (enemies.length === 0) {
-      enemyCount += 3;
+      enemyCount += 2;
       enemySpawn(enemyCount);
     }
 
@@ -190,7 +188,10 @@ import Victor from "victor"
 
             if (enemyIndex > -1) {
               enemies.splice(enemyIndex, 1);
-              gold += 20;
+              diamonds += 20;
+              document.querySelector('#diamonds').innerHTML = diamonds;
+              score += 10;
+              document.querySelector('#score-number').innerHTML = score;
             }
           }
 
@@ -199,6 +200,37 @@ import Victor from "victor"
       }
     })
   }
+
+  // Resume and Pause buttons
+  const pauseButton = document.getElementById("pause-button");
+  const resumeButton = document.getElementById("resume-button");
+
+  pauseButton.addEventListener("click", function() {
+    cancelAnimationFrame(moveId);
+  });
+
+  resumeButton.addEventListener("click", function() {
+    move();
+  });
+
+  // Play Again button
+  document.getElementById('play-again-button').addEventListener('click', function() {
+    hearts = 9;
+    document.querySelector('#hearts').innerHTML = hearts;
+    score = 0;
+    document.querySelector('#score-number').innerHTML = score;
+    diamonds = 100;
+    document.querySelector('#diamonds').innerHTML = diamonds;
+    enemyCount = 3;
+    enemies = [];
+    cats = [];
+
+    enemySpawn(enemyCount);
+
+    this.style.display = "none";
+
+    move();
+  })
 
   let mouse = {
     x: undefined,
@@ -232,5 +264,3 @@ import Victor from "victor"
         }
     }
   })
-
-  // <a href="https://github.com/michellechung099/CatDefense" id="live-link"><i class="fa fa-github"></i></a>

@@ -15,11 +15,27 @@ export default class Enemy {
     this.velocity = { x: 0, y: 0 }
     // this.speed = 5;
     this.image = new Image()
-    this.image.src = "assets/slimes_resized.png"
+    this.image.src = "assets/Run.png"
+    this.frames = {
+      max: 6,
+      current: 0,
+      timeElapsed: 0,
+      timeHold: 6
+    }
   }
 
   drawEnemy(c) {
-    c.drawImage(this.image, this.position.x, this.position.y)
+    const frameWidth = this.image.width / this.frames.max
+    const frame = {
+      position: {
+        x: frameWidth * this.frames.current,
+        y: 0,
+      },
+      width: frameWidth,
+      height: this.image.height
+    }
+
+    c.drawImage(this.image, frame.position.x, frame.position.y, frame.width, frame.height, this.position.x, this.position.y, frame.width, frame.height)
 
     //health bar
     c.fillStyle = 'black';
@@ -27,6 +43,14 @@ export default class Enemy {
 
     c.fillStyle = 'purple';
     c.fillRect((this.position.x - this.width/2), this.position.y-60, (this.width * this.health/100), 8)
+
+    this.frames.timeElapsed++
+    if (this.frames.timeElapsed % this.frames.timeHold === 0) {
+      this.frames.current++
+      if (this.frames.current >= this.frames.max - 1) {
+        this.frames.current = 0;
+      }
+    }
   }
 
   update(c) {
@@ -37,7 +61,7 @@ export default class Enemy {
     const yDistance = waypoint.y - this.position.y
     const xDistance = waypoint.x - this.position.x
     const angle = Math.atan2(yDistance, xDistance)
-    const speed = 5;
+    const speed = 2;
 
     this.velocity.x = Math.cos(angle) * speed
     this.velocity.y = Math.sin(angle) * speed

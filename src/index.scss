@@ -1,49 +1,174 @@
 body {
   margin: 0;
+  background-image: url('../assets/background.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 
-// #live-link {
-//   position: absolute;
-//   top: 10px;
-//   right: 10px;
-//   z-index: 2;
-// }
-
-// div {
-//   position: relative;
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   height: 100vh;
-//   width: 100vw;
-// }
-
-// #canvas {
-//   position: absolute;
-//   z-index: 1;
-//   border-radius: 10px;
-// }
+#social-links {
+  position: absolute;
+  visibility: hidden;
+  right: -50px;
+  bottom: 1px;
+}
 
 #canvas {
   border-radius: 30px;
   box-shadow: 0 0 10px 10px rgba(255, 255, 255, 0.2);
+  display: none;
+}
+
+#container {
+  position: relative;
+  display: inline-block;
+}
+
+#game-ui-top {
+  position: absolute;
+  top: 4px;
+  right: 75px;
 }
 
 #play-game-button {
-  background-color: purple;
-  border: none;
-  border-radius: 40px;
-  padding: 10px 20px;
-  color: white;
-  font-size: 30px;
+  width: 305px;
+  height: 75px;
+  background-image: url('../assets/button.png');
+  background-size: cover;
+  background-color: transparent;
   cursor: pointer;
-  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  margin-top: 50px;
+  margin-bottom: 50px;
+
+  h1 {
+    color: white;
+    text-align: center;
+    font-size: 20px;
+    margin: 0;
+    font-family: 'Archivo Black';
+  }
 }
 
+#instructions {
+  position: absolute;
+  display: block;
+  // text-align: left;
+  color: #f3f3f3e8;
+  top: 20vh;
+  width: 800px;
+  left: 25vw;
+  border-radius: 15px;
+  box-shadow: 0px 0px 20px rgb(234, 227, 227);
+}
 
-// #background-canvas {
-//   position: absolute;
-//   z-index: 0;
-//   height: 100vh;
-//   width: 100vw;
-// }
+#instructions-p {
+  font-size: 18px;
+  color: white;
+  font-family: 'Archivo Black';
+  margin: 30px;
+  text-align: left;
+}
+
+#instructions-title {
+  font-size: 40px;
+  color: white;
+  font-family: 'Archivo Black';
+  margin-top: 50px;
+  text-align: center;
+}
+
+#game-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+#canvas-container {
+  position: relative;
+}
+
+#game-container #side-section {
+  display: none;
+}
+
+#side-section {
+  width: 250px;
+  height: 350px;
+  border-radius: 15px;
+  box-shadow: 0px 0px 20px rgb(234, 227, 227);
+  margin-left: 90px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+#controls-title {
+  color: white;
+  font-family: 'Archivo Black';
+  font-size: 27px;
+}
+
+#pause-button, #resume-button {
+  border: none;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: pointer;
+  background-color: transparent;
+  color: white;
+  font-family: 'Archivo Black';
+  width: 150px;
+  height: 100px;
+}
+
+#pause-button {
+  background-image: url('../assets/button.png');
+  font-size: 20px;
+}
+
+#resume-button {
+  background-image: url('../assets/button.png');
+  font-size: 20px;
+}
+
+#score, #score-number, #diamonds, #hearts {
+  font-size: 36px;
+  color: white;
+  font-family: 'Archivo Black';
+  -webkit-text-stroke: 2px black;
+  margin-right: 13px;
+}
+
+#diamond-image, #heart-image {
+  height: 32px;
+  vertical-align: middle;
+  position: relative;
+  top: -7px;
+}
+
+#play-again-button {
+  position: absolute;
+  top: 58%;
+  left: 42%;
+  display:none;
+  background-image: url('../assets/button.png');
+  border: none;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: pointer;
+  background-color: transparent;
+  color: white;
+  font-family: 'Archivo Black';
+  width: 200px;
+  height: 100px;
+  font-size: 20px;
+}
