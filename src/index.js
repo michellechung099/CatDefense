@@ -244,32 +244,16 @@ import Victor from "victor"
     }
   })
 
-  const mouseMoveListener = (event) => {
+  canvas.addEventListener("mousemove", (event) => {
     mouse.x = event.clientX;
     mouse.y = event.clientY;
-
     activeTile = null;
     for (let i = 0; i < catPlacementTiles.length; i ++) {
       const tile = catPlacementTiles[i];
-
       if (mouse.x > tile.position.x && mouse.x < tile.position.x + tile.size &&
         mouse.y > tile.position.y && mouse.y < tile.position.y + tile.size) {
           activeTile = tile;
           break;
         }
     }
-  };
-
-  function throttle(fn, wait) {
-    let time = Date.now();
-    return function (event) {
-      if (time + wait - Date.now() < 0) {
-        fn(event);
-        time = Date.now();
-      }
-    }
-  }
-
-  const throttledMouseMoveListener = throttle(mouseMoveListener, 100);
-
-  canvas.addEventListener("mousemove", throttledMouseMoveListener);
+  });
