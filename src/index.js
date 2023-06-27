@@ -258,6 +258,8 @@ import Victor from "victor"
           break;
         }
     }
+  });
+
   function throttle(fn, wait) {
     let time = Date.now();
     return function (event) {
@@ -268,6 +270,6 @@ import Victor from "victor"
     }
   }
 
-  const throttledMouseMoveListener = throttle(mouseMoveListener, 300);
+  const throttledMouseMoveListener = throttle(mouseMoveListener, 100);
 
   canvas.addEventListener("mousemove", throttledMouseMoveListener);
