@@ -244,7 +244,7 @@ import Victor from "victor"
     }
   })
 
-  canvas.addEventListener("mousemove", (event) => {
+  const mouseMoveListener = (event) => {
     mouse.x = event.clientX;
     mouse.y = event.clientY;
 
@@ -258,7 +258,7 @@ import Victor from "victor"
           break;
         }
     }
-  });
+  };
 
   function throttle(fn, wait) {
     let time = Date.now();
