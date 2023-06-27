@@ -37,6 +37,7 @@ import Victor from "victor"
   for (let i = 0; i < catPlacement.length; i += 20) {
     placementPositions.push(catPlacement.slice(i, i+20));
   }
+  console.log("***** placementPositions: ", placementPositions);
   class CatTile {
     // object destructuring with position
     constructor({position = {x: 0, y: 0}}) {
@@ -243,10 +244,9 @@ import Victor from "victor"
     }
   })
 
-
-  function mouseMoveListener(event) {
-    mouse.x = event.offsetX;
-    mouse.y = event.offsetY;
+  canvas.addEventListener("mousemove", (event) => {
+    mouse.x = event.clientX;
+    mouse.y = event.clientY;
 
     activeTile = null;
     for (let i = 0; i < catPlacementTiles.length; i ++) {
@@ -258,8 +258,6 @@ import Victor from "victor"
           break;
         }
     }
-  }
-
   function throttle(fn, wait) {
     let time = Date.now();
     return function (event) {
