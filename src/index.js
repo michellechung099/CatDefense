@@ -37,6 +37,7 @@ import Victor from "victor"
   for (let i = 0; i < catPlacement.length; i += 20) {
     placementPositions.push(catPlacement.slice(i, i+20));
   }
+  console.log("***** placementPositions: ", placementPositions);
   class CatTile {
     // object destructuring with position
     constructor({position = {x: 0, y: 0}}) {
@@ -239,13 +240,16 @@ import Victor from "victor"
         x: activeTile.position.x,
         y: activeTile.position.y
       }}))
+      activeTile.isOccupied = true;
     }
-    activeTile.isOccupied = true;
   })
 
-  canvas.addEventListener("mousemove", (event) => {
-    mouse.x = event.clientX;
-    mouse.y = event.clientY;
+
+  function mouseMoveListener(event) {
+    mouse.x = event.offsetX;
+    mouse.y = event.offsetY;
+    // console.log("**** Event: ", event.clientX,  event.clientY);
+    console.log("**** Event: ", event);
 
     activeTile = null;
     for (let i = 0; i < catPlacementTiles.length; i ++) {
@@ -257,4 +261,18 @@ import Victor from "victor"
           break;
         }
     }
-  })
+  }
+
+  function throttle(fn, wait) {
+    let time = Date.now();
+    return function (event) {
+      if (time + wait - Date.now() < 0) {
+        fn(event);
+        time = Date.now();
+      }
+    }
+  }
+
+  const throttledMouseMoveListener = throttle(mouseMoveListener, 300);
+
+  canvas.addEventListener("mousemove", throttledMouseMoveListener);
