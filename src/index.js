@@ -245,8 +245,8 @@ import Victor from "victor"
   })
 
   canvas.addEventListener("mousemove", (event) => {
-    mouse.x = event.clientX;
-    mouse.y = event.clientY;
+    mouse.x = event.offSetX;
+    mouse.y = event.offSetY;
     activeTile = null;
     for (let i = 0; i < catPlacementTiles.length; i ++) {
       const tile = catPlacementTiles[i];
