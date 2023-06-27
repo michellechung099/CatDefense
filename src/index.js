@@ -37,7 +37,7 @@ import Victor from "victor"
   for (let i = 0; i < catPlacement.length; i += 20) {
     placementPositions.push(catPlacement.slice(i, i+20));
   }
-  console.log("***** placementPositions: ", placementPositions);
+
   class CatTile {
     // object destructuring with position
     constructor({position = {x: 0, y: 0}}) {
