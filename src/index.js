@@ -244,9 +244,10 @@ import Victor from "victor"
     }
   })
 
-  canvas.addEventListener("mousemove", (event) => {
-    mouse.x = event.offSetX;
-    mouse.y = event.offSetY;
+  function mouseMoveListener(event) {
+    mouse.x = event.offsetX;
+    mouse.y = event.offsetY;
+
     activeTile = null;
     for (let i = 0; i < catPlacementTiles.length; i ++) {
       const tile = catPlacementTiles[i];
@@ -256,4 +257,18 @@ import Victor from "victor"
           break;
         }
     }
-  });
+  }
+
+  function throttle(fn, wait) {
+    let time = Date.now();
+    return function (event) {
+      if (time + wait - Date.now() < 0) {
+        fn(event);
+        time = Date.now();
+      }
+    }
+  }
+
+  const throttledMouseMoveListener = throttle(mouseMoveListener, 50);
+
+  canvas.addEventListener("mousemove", throttledMouseMoveListener);
