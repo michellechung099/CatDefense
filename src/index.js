@@ -9,7 +9,7 @@ import Victor from "victor"
   document.getElementById("play-game-button").addEventListener("click", function() {
     document.getElementById("instructions").style.display = "none";
     document.getElementById("social-links").style.visibility = 'visible';
-
+    document.getElementById("game-ui-top").style.display = "block";
     document.getElementById("side-section").style.display = "flex";
     document.getElementById("canvas").style.display = "block";
     img.src = "assets/finalMap.png"
@@ -106,7 +106,10 @@ import Victor from "victor"
     moveId = requestAnimationFrame(move);
 
     // draw image on canvas
-    c.drawImage(img, 0, 0);
+    // c.drawImage(img, 0, 0);
+    // Assuming img is the full image you want to draw.
+    c.drawImage(img, 0, 0, img.width, img.height, 0, 0, canvas.width, canvas.height);
+
 
     // this is also refactored into for loop from the back to prevent flickering when removing the enemies
     // because you want them to be rendered and removed
